@@ -31,5 +31,6 @@
     "jest": "^29.6.1",
     "jest-environment-jsdom": "^29.6.1",
     "sass": "^1.64.0"
-  }
+  },
+  "packageManager": "yarn@4.13.0"
 }
