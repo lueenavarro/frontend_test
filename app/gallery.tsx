@@ -9,14 +9,16 @@ import {
   FaEnvelope,
 } from "react-icons/fa6";
 
-import Controls from "./controls";
+import Controls, { ControlValue, FieldValues } from "./controls";
 import Modal from "./modal";
 
 import { User } from "./types/user";
+import { getNestedValue } from "./utils/object";
 
 export type GalleryProps = {
   users: User[];
 };
+
 const Gallery = ({ users }: GalleryProps) => {
   const [usersList, setUsersList] = useState(users);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -36,11 +38,36 @@ const Gallery = ({ users }: GalleryProps) => {
     setIsModalOpen(false);
   };
 
+  const handleControlsChange = (newValue: ControlValue) => {
+    const controlUserFieldMap: Record<FieldValues, string> = {
+      name: "name",
+      company: "company.name",
+      email: "email",
+    }
+
+    const sortedUsers = [...usersList].sort((a, b) => {
+      const path = controlUserFieldMap[newValue.field];
+
+      const fieldA = getNestedValue(a, path);
+      const fieldB = getNestedValue(b, path);
+
+      if (typeof fieldA === "string" && typeof fieldB === "string") {
+        return newValue.direction === "ascending"
+          ? fieldA.localeCompare(fieldB)
+          : fieldB.localeCompare(fieldA);
+      }
+
+      return 0;
+    });
+
+    setUsersList(sortedUsers);
+  }
+
   return (
     <div className="user-gallery">
       <div className="heading">
         <h1 className="title">Users</h1>
-        <Controls />
+        <Controls onChange={handleControlsChange} />
       </div>
       <div className="items">
         {usersList.map((user, index) => (
