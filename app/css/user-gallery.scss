@@ -3,16 +3,12 @@
 
   > .items {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));;
     grid-template-rows: auto;
-    grid-gap: 16px;
-
-    @media screen and (max-width: 480px) {
-      grid-template-columns: 1fr;
-    }
+    grid-gap: 1rem;
   }
 
   > .heading + .items {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
 }
