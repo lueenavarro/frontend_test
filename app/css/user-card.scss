@@ -27,7 +27,8 @@
   }
 
   > .body + .info {
-    margin-left: 16px;
+    padding-left: 16px;
+    box-sizing: border-box;
   }
 
   > .info > .name {
