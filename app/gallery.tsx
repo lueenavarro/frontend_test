@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Avatar from "boring-avatars";
 import {
   FaRegCircleXmark,
   FaLocationDot,
@@ -12,6 +11,7 @@ import {
 import Modal from "./modal";
 
 import { User } from "./types/user";
+import { Avatar } from "./avatar";
 
 export type GalleryProps = {
   users: User[];
@@ -46,12 +46,7 @@ const Gallery = ({ users }: GalleryProps) => {
             onClick={() => handleModalOpen(user.id)}
           >
             <div className="body">
-              <Avatar
-                size={96}
-                name={user.name}
-                variant="marble"
-                colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-              />
+              <Avatar userId={user.id} userName={user.name} size={96} />
             </div>
             <div className="info">
               <div className="name">{user.name}</div>
@@ -75,18 +70,7 @@ const Gallery = ({ users }: GalleryProps) => {
               {selectedUser && (
                 <div className="user-info info">
                   <div className="avatar">
-                    <Avatar
-                      size={240}
-                      name={selectedUser.name}
-                      variant="marble"
-                      colors={[
-                        "#92A1C6",
-                        "#146A7C",
-                        "#F0AB3D",
-                        "#C271B4",
-                        "#C20D90",
-                      ]}
-                    />
+                    <Avatar userId={selectedUser.id} userName={selectedUser.name} size={240} />
                   </div>
                   <div className="name">
                     {selectedUser.name} ({selectedUser.username})
