@@ -30,11 +30,23 @@ const Controls = ({ onChange }: ControlsProps) => {
   ];
 
 
-  const [field, setField] = useState<ControlOption<FieldValues>>(fieldOptions[0]);
-  const [direction, setDirection] = useState<ControlOption<DirectionValues>>(directionOptions[0]);
+  const [field, setField] = useState<ControlOption<FieldValues>>();
+  const [direction, setDirection] = useState<ControlOption<DirectionValues>>();
 
   useEffect(() => {
-    onChange({ field: field.value, direction: direction.value });
+    if (field && !direction) {
+      setDirection(directionOptions[0]);
+      return;
+    }
+
+    if (direction && !field) {
+      setField(fieldOptions[0]);
+      return;
+    }
+
+    if(field && direction) {
+      onChange({ field: field.value, direction: direction.value });
+    }
   }, [field, direction, onChange]);
 
   return (
